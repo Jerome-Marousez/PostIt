@@ -1,0 +1,248 @@
+body {
+    background-color: hsl(0, 0%, 20%);
+    margin: 0 0;
+}
+
+
+/* -------------------------------------------- */
+#todoContainer {
+    margin: 40px 0;
+}
+
+#containerTitle {
+    font-family: Calibri;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: hsl(35, 100%, 50%);
+    border-radius: 5px 5px 0 0;
+    color: white;
+    padding:8px 8px 8px 8px;
+    font-weight: bold;
+    cursor: default;
+    user-select: none;
+    width: 910px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+#add {
+    background-color: hsl(35, 100%, 70%);
+    height: 20px;
+    width: 40px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 18px;
+}
+
+#add:active {
+    background-color: hsl(35, 100%, 50%);
+}
+
+
+
+#container {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 40px;
+    width: 910px;
+    max-height: 540px;
+    background-color: hsl(0, 0%, 30%);
+    padding: 0 35px;
+    user-select: none;
+    overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#container::-webkit-scrollbar {
+    width: 10px;
+}
+#container::-webkit-scrollbar-track {
+    background: hsl(0, 0%, 30%);
+}
+
+#container::-webkit-scrollbar-thumb {
+    background: hsl(0, 0%, 40%);
+}
+
+#container::-webkit-scrollbar-thumb:hover {
+    background: hsl(0, 0%, 50%);
+}
+
+
+
+
+#footer {
+    background-color: hsl(35, 100%, 50%);
+    border-radius: 0 0 5px 5px;
+    color: hsl(35, 100%, 75%);
+    padding: 10px 8px 8px 8px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 20px;
+    user-select: none;
+    width: 910px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#scroll-text {
+    margin-top: 0;
+    -moz-transform: translateX(200%);
+    -webkit-transform: translateX(200%);
+    transform: translateX(200%);
+
+    -moz-animation: my-animation 30s linear infinite;
+    -webkit-animation: my-animation 30s linear infinite;
+    animation: my-animation 30s linear infinite;
+}
+
+@-moz-keyframes my-animation {
+    from { -moz-transform: translateX(100%); }
+    to { -moz-transform: translateX(-200%); }
+}
+
+@-webkit-keyframes my-animation {
+    from { -webkit-transform: translateX(100%); }
+    to { -webkit-transform: translateX(-200%); }
+}
+
+@keyframes my-animation {
+    from {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    to {
+        -moz-transform: translateX(-200%);
+        -webkit-transform: translateX(-200%);
+        transform: translateX(-200%);
+    }
+}
+
+
+
+/* POST IT */
+.postItContainer {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 250px;
+    height: 250px;
+    background-color: hsl(35, 100%, 75%);
+    border-radius: 2px 2px 22px 2px;
+    position: relative;
+    box-shadow: 5px 5px 8px hsl(0, 0%, 15%);
+    animation: translate-down 300ms ease-in;
+    margin: 40px 0;
+}
+
+@keyframes translate-down {
+    from {
+        top:-15px;
+        box-shadow: 15px 15px 8px hsl(0, 0%, 15%);
+    }
+    to {
+        top: 0;
+        box-shadow: 5px 5px 8px hsl(0, 0%, 15%);
+
+    }
+}
+
+#paper {
+    background-color: hsl(35, 100%, 85%);
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 22px 0;
+}
+
+.postItHeader {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    background-color: hsl(35, 100%, 68%);
+    padding: 8px 8px;
+}
+
+#delete {
+    align-self: center;
+    width: 18px;
+    height: 18px;
+    background-color: hsl(35, 100%, 75%);
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    line-height: 18px;
+}
+#delete:active {
+     background-color: hsl(35, 100%, 65%);
+ }
+
+
+
+textarea {
+    font-family: cursive;
+    box-sizing: border-box;
+    width: 100%;
+    height: 190px;
+    background-color: hsl(35, 100%, 75%);
+    border: none;
+    padding: 8px 8px;
+    color: white;
+    font-size: 18px;
+    resize: none;
+}
+
+textarea::placeholder {
+    color: hsl(35, 100%, 60%);
+    opacity: 1;
+}
+
+textarea:focus {
+    outline: none !important;
+}
+
+textarea::-moz-selection {
+    color: hsl(35, 100%, 68%);
+}
+textarea::selection {
+    color: hsl(35, 100%, 68%);
+}
+
+textarea::-webkit-scrollbar {
+    width: 5px;
+}
+textarea::-webkit-scrollbar-track {
+    background: hsl(35, 100%, 75%);
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: hsl(35, 100%, 85%);
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: hsl(35, 100%, 85%);
+}
+
+
+
