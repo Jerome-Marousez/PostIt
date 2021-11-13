@@ -1,52 +1,41 @@
 
-
-// INIT & GLOBAL VARIABLES----------------------------------------
-// /!\ Respect order of instantiation /!\
-
-// localStorage.setItem(0, "0")
-// localStorage.setItem(1, "0")
-
-
-createContainer()
-init()
-
-
-function init (){
-    for (const [key, value] of Object.entries(localStorage)) {
-        generatePostIt(value, key)
-    }
-}
-
-
+// Create frame of the app
 function createContainer () {
 
-    const todoContainer = document.createElement('div')
-    todoContainer.id = "todoContainer"
+    // Main container that contains everything
+    const mainContainer = document.createElement('div')
+    mainContainer.id = "todoContainer"
+
+    // Header
     const containerTitle = document.createElement('div')
     containerTitle.id = 'containerTitle'
     containerTitle.innerHTML = 'Postponed Task Manager'
 
+    // Body
     const container = document.createElement('div')
     container.id = 'container'
 
+    // Footer
     const footer = document.createElement('div')
     footer.id = 'footer'
 
-    document.body.appendChild(todoContainer)
-    todoContainer.append(containerTitle)
-    todoContainer.append(container)
-    todoContainer.append(footer)
+    // Push elements to HTML
+    document.body.appendChild(mainContainer)
+    mainContainer.append(containerTitle)
+    mainContainer.append(container)
+    mainContainer.append(footer)
 
-
+    // Header | + | button
     const buttonAdd = document.createElement('div')
     buttonAdd.id = 'add'
     buttonAdd.innerHTML = '+'
     containerTitle.append(buttonAdd)
 
     buttonAdd.addEventListener('click', function(){
-        generatePostIt()
+        addPostIt()
     })
 
+    // Footer scroll text
     const scrollText = document.createElement('pre')
     scrollText.id = 'scroll-text'
     scrollText.innerHTML = `Press the + button to generate a new TODO and postpone yet another task           Your changes are saved locally and will be there when you will come back`
@@ -55,59 +44,83 @@ function createContainer () {
 }
 
 
-// Post it constructor
-function PostIt(text, id) {
-    this.id = id
-    this.text = text
+// OBJECT post it
+class PostIt {
 
-    // post-it outlines
-    const postIt = document.createElement('div')
-    postIt.classList.add('postItContainer')
-    postIt.id = id
-    const container = document.getElementById('container')
-    container.append(postIt)
-    const paper = document.createElement('div')
-    paper.id = "paper"
-    postIt.append(paper)
-
-    // post-it header
-    const postItHeader = document.createElement('div')
-    postItHeader.classList.add('postItHeader')
-    postIt.append(postItHeader)
-
-    // post-it content
-
-    const deleteButton = document.createElement('div')
-    deleteButton.id = 'delete'
-    deleteButton.innerHTML = '✖'
-    postItHeader.append(deleteButton)
-
-    deleteButton.addEventListener('click', function(){
-        deletePostIt(id)
-    })
-
-    let inputText = document.createElement('textarea')
-    inputText.placeholder = 'To do...'
-    inputText.spellcheck = 'false'
-    postIt.append(inputText)
-
-    if(text !== "") {
-        inputText.value = text
+    constructor(text, id) {
+        this.id = id
+        this.text = text
+        this.createContainer(text, id)
     }
 
-    inputText.onkeyup = function () {
-        updateTodo(inputText.value, id)
+    createContainer (text, id) {
+
+        // post-it outlines
+        const postIt = document.createElement('div')
+        postIt.classList.add('postItContainer')
+        postIt.id = id
+        const container = document.getElementById('container')
+        container.append(postIt)
+        const paper = document.createElement('div')
+        paper.id = "paper"
+        postIt.append(paper)
+
+        // post-it header
+        const postItHeader = document.createElement('div')
+        postItHeader.classList.add('postItHeader')
+        postIt.append(postItHeader)
+
+        // | X | button
+        const deleteButton = document.createElement('div')
+        deleteButton.id = 'delete'
+        deleteButton.innerHTML = '✖'
+        postItHeader.append(deleteButton)
+
+        deleteButton.addEventListener('click', () => {
+            this.deletePostIt(id)
+        })
+
+        // Textarea
+        let inputText = document.createElement('textarea')
+        inputText.placeholder = 'To do...'
+        inputText.spellcheck = 'false'
+        postIt.append(inputText)
+
+        if(text !== "") {
+            inputText.value = text
+        }
+
+        inputText.onkeyup = () => {
+            this.text = inputText.value
+            this.save(this)
+        }
+
+    }
+
+    // Create a new item in the database or update it
+    save = (obj) => {
+        localStorage.setItem(obj.id, obj.text)
+
+    }
+
+    // Delete a post it
+    deletePostIt = (id) => {
+        localStorage.removeItem(id)
+        // remove post it from HTML
+        let item = document.getElementById(id)
+        item.parentNode.removeChild(item)
     }
 
 }
 
-
-function generatePostIt(text="", id=undefined){
+// Create new post it (from scratch and database)
+function addPostIt(text="", id=undefined) {
     let array = []
     let uniqueID = id
 
+    // Generates a new unique ID when creating a new post it
     if (uniqueID === undefined) {
-        Object.keys(localStorage).forEach(function(key){
+        Object.keys(localStorage).forEach(function(key) {
             array.push(key)
         })
         array.sort()
@@ -120,26 +133,20 @@ function generatePostIt(text="", id=undefined){
 
     }
 
-
+    // Generating post it
     const todo = new PostIt(text, uniqueID)
-    updateData(todo)
-
-}
-// localStorage.clear()
-
-
-function updateTodo(text, id) {
-    localStorage.setItem(id, text)
+    todo.save(todo)
 
 }
 
-function updateData(obj){
-    localStorage.setItem(obj.id, obj.text)
 
+// Get post it from database (boot/refresh sequence)
+function init () {
+    for (const [key, value] of Object.entries(localStorage)) {
+        addPostIt(value, key)
+    }
 }
 
-function deletePostIt(id) {
-    localStorage.removeItem(id)
-    let el = document.getElementById(id);
-    el.parentNode.removeChild( el )
-}
+createContainer()
+init()
+
