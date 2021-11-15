@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------------
 // --------------------------------------- HOW TO USE -----------------------------------------
 //
-// Load this JS file from the <head> of the HTML like so: <script src="script.js" defer></script>
+// Load this JS file from the <head> of the HTML like so: <script src="post-it.js" defer></script>
 // Add a div in the <body> wherever you want post-its like so: <div id="post-it"></div>
 //
 //
