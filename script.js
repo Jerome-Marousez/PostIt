@@ -1,3 +1,19 @@
+// --------------------------------------------------------------------------------------------
+// --------------------------------------- HOW TO USE -----------------------------------------
+//
+// Load this JS file from the <head> of the HTML like so: <script src="script.js" defer></script>
+// Add a div in the <body> wherever you want post-its like so: <div id="post-it"></div>
+//
+//
+// USER MANUAL
+// Press the + button to add a new post it
+// Post it limit is 24
+// Click on the top part of a post it to assign a color
+// Click anywhere else on the post it to write stuff in it
+// Text areas have no character limit
+// Everything gets saved locally and will be there if you refresh or come back later
+// --------------------------------------------------------------------------------------------
+
 
 // CSS
 const css = document.createElement('style')
@@ -293,7 +309,8 @@ function createContainer () {
 
 
     // Push elements to HTML
-    document.body.append(mainContainer)
+    const anchor = document.getElementById('post-it')
+    anchor.append(mainContainer)
     mainContainer.append(containerTitle)
     mainContainer.append(container)
     mainContainer.append(footer)
